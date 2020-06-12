@@ -1,0 +1,20 @@
+version: '3'
+services:
+  jupyter:
+    build: ./
+    container_name: ml-jupyter
+    volumes:
+      - ./:/work
+    working_dir: /work
+    ports:
+      - "8888:8888"
+    command: jupyter notebook --notebook-dir /work --ip=0.0.0.0
+  lab:
+    build: ./
+    container_name: ml-lab
+    volumes:
+      - ./:/work
+    working_dir: /work
+    ports:
+      - "8888:8888"
+    command: jupyter lab --notebook-dir /work --ip=0.0.0.0
