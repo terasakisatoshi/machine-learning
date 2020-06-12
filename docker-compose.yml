@@ -18,3 +18,12 @@ services:
     ports:
       - "8888:8888"
     command: jupyter lab --notebook-dir /work --ip=0.0.0.0
+  streamlit:
+    build: ./
+    container_name: ml-streamlit
+    volumes:
+      - ./:/work
+    working_dir: /work
+    ports:
+      - "8501:8501"
+    command: streamlit run app.py
