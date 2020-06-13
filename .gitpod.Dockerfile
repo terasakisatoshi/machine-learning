@@ -4,8 +4,7 @@ USER root
 
 RUN apt-get update && \
     curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
-    apt-get install -y nodejs && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* # clean up  
+    apt-get install -y nodejs
 
 USER gitpod
 
