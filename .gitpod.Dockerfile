@@ -77,13 +77,3 @@ RUN mkdir -p ${HOME}/.jupyter/lab/user-settings/@jupyterlab/notebook-extension &
 \
 ' >> ${HOME}/.jupyter/lab/user-settings/@jupyterlab/notebook-extension/tracker.jupyterlab-settings
 
-RUN pip install tensorflow streamlit && \
-    conda install -c conda-forge opencv && \
-    conda clean --all -f -y
-
-RUN mkdir -p ${HOME}/.streamlit
-RUN bash -c 'echo -e "\
-[general]\n\
-email = \"\"\n\
-" > ${HOME}/.streamlit/credentials.toml'
-
