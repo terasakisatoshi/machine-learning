@@ -10,7 +10,7 @@ RUN pip3 install \
     jupyter_contrib_nbextensions \
     jupyterlab_code_formatter
 
-RUN echo "\
+RUN mkdir ${HOME}/.jupyter && echo "\
 c.ContentsManager.default_jupytext_formats = 'ipynb,py'\n\
 c.NotebookApp.contents_manager_class = 'jupytext.TextFileContentsManager'\n\
 c.NotebookApp.open_browser = False\n\
