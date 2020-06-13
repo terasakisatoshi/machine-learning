@@ -46,3 +46,44 @@ RUN jupyter labextension install @lckr/jupyterlab_variableinspector --no-build &
     rm -rf /home/$NB_USER/.cache/yarn && \
     rm -rf /home/$NB_USER/.node-gyp && \
     echo Done
+
+# Setup default formatter (For Python Users only)
+RUN mkdir -p ${HOME}/.jupyter/lab/user-settings/@ryantam626/jupyterlab_code_formatter && echo '\
+{\n\
+    "preferences": {\n\
+        "default_formatter": {\n\
+            "python": "black",\n\
+        }\n\
+    }\n\
+}\n\
+\
+'>> ${HOME}/.jupyter/lab/user-settings/@ryantam626/jupyterlab_code_formatter/settings.jupyterlab-settings
+
+# Set color theme Monokai++ by default (The selection is due to my hobby)
+RUN mkdir -p ${HOME}/.jupyter/lab/user-settings/@jupyterlab/apputils-extension && echo '\
+{\n\
+    "theme": "Monokai++"\n\
+}\n\
+\
+' >> ${HOME}/.jupyter/lab/user-settings/@jupyterlab/apputils-extension/themes.jupyterlab-settings
+
+# Show line numbers by default
+RUN mkdir -p ${HOME}/.jupyter/lab/user-settings/@jupyterlab/notebook-extension && echo '\
+{\n\
+    "codeCellConfig": {\n\
+        "lineNumbers": true,\n\
+    },\n\
+}\n\
+\
+' >> ${HOME}/.jupyter/lab/user-settings/@jupyterlab/notebook-extension/tracker.jupyterlab-settings
+
+RUN pip install tensorflow streamlit && \
+    conda install -c conda-forge opencv && \
+    conda clean --all -f -y
+
+RUN mkdir -p ${HOME}/.streamlit
+RUN bash -c 'echo -e "\
+[general]\n\
+email = \"\"\n\
+" > ${HOME}/.streamlit/credentials.toml'
+
