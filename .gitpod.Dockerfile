@@ -1,14 +1,20 @@
 FROM gitpod/workspace-full:latest
 
-USER root
-
-RUN apt-get update && \
-    curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
-    apt-get install -y nodejs
-
 USER gitpod
 
 RUN pip3 install tensorflow streamlit sklearn numpy matplotlib pandas
+RUN pip3 install \
+    black \
+    jupytext \
+    pytest \
+    jupyter_contrib_nbextensions \
+    jupyterlab_code_formatter
+
+RUN echo "\
+c.ContentsManager.default_jupytext_formats = 'ipynb,py'\n\
+c.NotebookApp.contents_manager_class = 'jupytext.TextFileContentsManager'\n\
+c.NotebookApp.open_browser = False\n\
+" >> ${HOME}/.jupyter/jupyter_notebook_config.py
 
 # prepare to install extension
 RUN jupyter contrib nbextension install --user && \
