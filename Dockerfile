@@ -10,7 +10,7 @@ RUN conda install -y -c conda-forge \
     && \
     conda clean --all -f -y
 
-RUN echo "\
+RUN mkdir ${HOME}/.jupyter && echo "\
 c.ContentsManager.default_jupytext_formats = 'ipynb,py'\n\
 c.NotebookApp.contents_manager_class = 'jupytext.TextFileContentsManager'\n\
 c.NotebookApp.open_browser = False\n\
