@@ -4,11 +4,13 @@ USER gitpod
 
 RUN pip3 install tensorflow streamlit sklearn numpy matplotlib pandas
 RUN pip3 install \
-    black \
+    jupyter \
+    jupyterlab \
     jupytext \
-    pytest \
     jupyter_contrib_nbextensions \
-    jupyterlab_code_formatter
+    jupyterlab_code_formatter \
+    black \
+    pytest
 
 RUN mkdir ${HOME}/.jupyter && echo "\
 c.ContentsManager.default_jupytext_formats = 'ipynb,py'\n\
