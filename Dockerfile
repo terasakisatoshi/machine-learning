@@ -114,5 +114,5 @@ RUN jupyter nbextension uninstall --user webio/main && \
               installkernel("Julia", "--project=$envhome", "-J/sysimages/ijulia.so");\
               ' && \
     echo "Done"
-RUN julia -e 'using PackageCompiler; create_sysimage([:Plots], sysimage_path="${HOME}/julia-${JULIA_VERSION}/plots.so")'
+RUN mkdir -p ${HOME}/sysimages && julia -e 'using PackageCompiler; create_sysimage([:Plots], sysimage_path="$(homedir())/sysimages/plots.so")'
 RUN julia -e 'using Pkg; Pkg.precompile()'
