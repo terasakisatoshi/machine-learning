@@ -89,7 +89,7 @@ pipe = make_pipeline(
     LogisticRegression(random_state=0),
 )
 
-X, y = load_iris(return_X_y=True,as_frame=True)
+X, y = load_iris(return_X_y=True)
 
 X_train, X_test, y_train, y_test= train_test_split(
     X, y, 
