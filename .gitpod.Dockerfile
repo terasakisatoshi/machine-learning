@@ -8,13 +8,4 @@ RUN apt-get update && apt-get install -y \
 
 USER gitpod
 
-RUN pip3 install tensorflow streamlit sklearn numpy matplotlib pandas
-RUN pip3 install \
-    jupyter \
-    jupyterlab \
-    jupytext \
-    jupyter_contrib_nbextensions \
-    jupyterlab_code_formatter \
-    black \
-    pytest
-
+RUN pip3 install tensorflow streamlit sklearn numpy matplotlib pandas black pytest
