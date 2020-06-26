@@ -8,4 +8,4 @@ RUN apt-get update && apt-get install -y \
 
 USER gitpod
 
-RUN pip3 install tensorflow streamlit sklearn numpy matplotlib pandas black pytest
+RUN pip3 install streamlit sklearn numpy matplotlib pandas black pytest
