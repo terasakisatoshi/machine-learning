@@ -10,12 +10,6 @@ RUN conda install -y -c conda-forge \
     && \
     conda clean --all -f -y
 
-RUN echo "\
-c.ContentsManager.default_jupytext_formats = 'ipynb,py'\n\
-c.NotebookApp.contents_manager_class = 'jupytext.TextFileContentsManager'\n\
-c.NotebookApp.open_browser = False\n\
-" >> ${HOME}/.jupyter/jupyter_notebook_config.py
-
 # prepare to install extension
 RUN jupyter contrib nbextension install --user && \
     jupyter nbextensions_configurator enable --user && \
