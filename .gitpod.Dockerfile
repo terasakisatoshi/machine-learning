@@ -83,3 +83,29 @@ RUN mkdir -p ${HOME}/.jupyter/lab/user-settings/@jupyterlab/notebook-extension &
 \
 ' >> ${HOME}/.jupyter/lab/user-settings/@jupyterlab/notebook-extension/tracker.jupyterlab-settings
 
+# Julia dependencies
+ENV JULIA_VERSION=1.4.2
+ENV PATH="${HOME}/julia-${JULIA_VERSION}/bin":$PATH
+# This technique is taken from jupyter/docker-stacks project
+RUN mkdir "${HOME}/julia-${JULIA_VERSION}" && \
+    wget -q https://julialang-s3.julialang.org/bin/linux/x64/$(echo "${JULIA_VERSION}" | cut -d. -f 1,2)"/julia-${JULIA_VERSION}-linux-x86_64.tar.gz" && \
+    echo "d77311be23260710e89700d0b1113eecf421d6cf31a9cebad3f6bdd606165c28 *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
+    tar xzf "julia-${JULIA_VERSION}-linux-x86_64.tar.gz" -C "${HOME}/julia-${JULIA_VERSION}" --strip-components=1 && \
+    rm "./julia-${JULIA_VERSION}-linux-x86_64.tar.gz"
+
+RUN julia -e 'using Pkg; Pkg.add(["Plots", "PackageCompiler"])'
+# Install kernel so that `JULIA_PROJECT` should be $JULIA_PROJECT
+RUN jupyter nbextension uninstall --user webio/main && \
+    jupyter nbextension uninstall --user webio-jupyter-notebook && \
+    julia -e '\
+              using Pkg; \
+              Pkg.add(PackageSpec(name="IJulia", version="1.21.2")); \
+              Pkg.add(PackageSpec(name="WebIO", version="0.8.14")); \
+              Pkg.add(PackageSpec(name="Interact", version="0.10.3")); \
+              Pkg.pin(["IJulia", "WebIO","Interact"]); \
+              using IJulia, WebIO; \
+              WebIO.install_jupyter_nbextension(); \
+              ' && \
+    echo "Done"
+#RUN mkdir -p ${HOME}/sysimages && julia -e 'using PackageCompiler; create_sysimage([:Plots], sysimage_path="$(homedir())/sysimages/plots.so")'
+RUN julia -e 'using Pkg; Pkg.precompile()'

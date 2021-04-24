@@ -18,6 +18,20 @@ services:
     ports:
       - "8888:8888"
     command: jupyter lab --notebook-dir /work --ip=0.0.0.0
+  python:
+    build: ./
+    container_name: ml-python
+    volumes:
+      - ./:/work
+    working_dir: /work
+    command: python
+  julia:
+    build: ./
+    container_name: ml-julia
+    volumes:
+      - ./:/work
+    working_dir: /work
+    command: julia
   streamlit:
     build: ./
     container_name: ml-streamlit
